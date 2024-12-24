@@ -9,7 +9,7 @@ const PaymentCard = ({ amount }) => {
 
   const handlePaymentSubmit = (e) => {
     e.preventDefault();
-    // Handle payment logic here (integrate Stripe or other payment gateway)
+
     alert(`Payment of $${amount} Submitted!`);
   };
 

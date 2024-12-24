@@ -11,6 +11,12 @@ const Index = ({ courses }) => {
     const handleOpen = () => setModalOpen(true);
     const handleClose = () => setModalOpen(false);
 
+    const lecturers = [
+        { id: 1, name: 'John Brown' },
+        { id: 2, name: 'Jane Smith' },
+        { id: 3, name: 'Mary Johnson' },
+    ];
+
 
     return (
         <MainLayout>
@@ -22,7 +28,7 @@ const Index = ({ courses }) => {
             {/* </Link> */}
 
             {/* Modal for Create Course */}
-            <CreateCourseModal open={modalOpen} onClose={handleClose} />
+            <CreateCourseModal open={modalOpen} onClose={handleClose} lecturers={lecturers} />
 
             <ul className='mt-5'>
                 {/* List of courses */}

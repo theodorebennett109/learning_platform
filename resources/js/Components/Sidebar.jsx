@@ -10,7 +10,7 @@ import {
 } from '@mui/material';
 import { Home, CreditCard, ExitToApp, Close, DirectionsBus, AutoStories, Person } from '@mui/icons-material'; // Import DirectionsBus icon
 import { useTheme } from '@mui/material/styles';
-import { Link } from '@inertiajs/react'; // Import Link from Inertia.js
+import { Link } from '@inertiajs/react';
 
 const Sidebar = ({ open, onClose }) => {
   const theme = useTheme();
@@ -21,22 +21,22 @@ const Sidebar = ({ open, onClose }) => {
     {
       text: 'Home',
       icon: <Home />,
-      href: '/', // Path for Home
+      href: '/',
     },
     {
       text: 'Courses',
       icon: <AutoStories />,
-      href: '/courses', // Path for Smart Card Management
+      href: '/courses',
     },
     {
-      text: 'Lecturers', // New item for routes
+      text: 'Lecturers',
       icon: <Person />,
-      href: '/lecturers', // Path for the Routes page
+      href: '/lecturers',
     },
     {
       text: 'Logout',
       icon: <ExitToApp />,
-      href: '/logout', // Path for Logout
+      href: '/logout',
     },
   ];
 

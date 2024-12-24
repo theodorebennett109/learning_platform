@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
-import { Modal, Box, Typography, TextField, Button } from '@mui/material';
+import { Modal, Box, Typography, TextField, Button, MenuItem, FormControl, InputLabel, Select } from '@mui/material';
 import { useForm } from '@inertiajs/react';
 
-const CreateCourseModal = ({ open, onClose }) => {
+const CreateCourseModal = ({ open, onClose, lecturers }) => {
     const { data, setData, post } = useForm({
         title: '',
         description: '',
-        price: ''
+        price: '',
+        lecturer_id: '', // use lecturer_id instead of lecturer name
     });
 
     const handleSubmit = (e) => {
@@ -40,14 +41,16 @@ const CreateCourseModal = ({ open, onClose }) => {
                 </Typography>
 
                 <form onSubmit={handleSubmit}>
-                    <TextField required
+                    <TextField
+                        required
                         fullWidth
                         label="Course Title"
                         value={data.title}
                         onChange={(e) => setData('title', e.target.value)}
                         sx={{ marginBottom: 2 }}
                     />
-                    <TextField required
+                    <TextField
+                        required
                         fullWidth
                         label="Course Description"
                         multiline
@@ -56,7 +59,26 @@ const CreateCourseModal = ({ open, onClose }) => {
                         onChange={(e) => setData('description', e.target.value)}
                         sx={{ marginBottom: 2 }}
                     />
-                    <TextField required
+
+                    {/* Lecturer Select Dropdown */}
+                    <FormControl fullWidth sx={{ marginBottom: 2 }}>
+                        <InputLabel id="lecturer-label">Course Lecturer</InputLabel>
+                        <Select
+                            labelId="lecturer-label"
+                            value={data.lecturer_id}
+                            onChange={(e) => setData('lecturer_id', e.target.value)}
+                            label="Course Lecturer"
+                        >
+                            {lecturers.map((lecturer) => (
+                                <MenuItem key={lecturer.id} value={lecturer.id}>
+                                    {lecturer.name} {/* Displaying lecturer name */}
+                                </MenuItem>
+                            ))}
+                        </Select>
+                    </FormControl>
+
+                    <TextField
+                        required
                         fullWidth
                         label="Price"
                         type="number"

@@ -16,6 +16,11 @@ return Application::configure(basePath: dirname(__DIR__))
             \Illuminate\Http\Middleware\AddLinkHeadersForPreloadedAssets::class,
         ]);
 
+        // Add the VerifyCsrfToken middleware
+        $middleware->validateCsrfTokens(except: [
+            '/lecturers/*/add',
+        ]);
+
         //
     })
     ->withExceptions(function (Exceptions $exceptions) {

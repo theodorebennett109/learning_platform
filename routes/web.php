@@ -25,6 +25,7 @@ Route::middleware('auth')->group(function () {
 });
 
 use App\Http\Controllers\CourseController;
+use App\Http\Controllers\LecturerController;
 
 Route::get('/courses', [CourseController::class, 'index'])->name('courses.index');
 Route::get('/courses/create', [CourseController::class, 'create'])->name('courses.create');
@@ -34,5 +35,9 @@ Route::get('/courses/{course}/edit', [CourseController::class, 'edit'])->name('c
 Route::put('/courses/{course}', [CourseController::class, 'update'])->name('courses.update');
 Route::delete('/courses/{course}', [CourseController::class, 'destroy'])->name('courses.destroy');
 
+
+Route::get('/lecturers', [LecturerController::class, 'index']);  // Lecturer Index
+Route::get('/lecturers/{id}', [LecturerController::class, 'show']);  // Lecturer Show
+Route::post('/lecturers/{id}/add', [LecturerController::class, 'addLecturer']); // Route for adding lecturer
 
 require __DIR__.'/auth.php';
