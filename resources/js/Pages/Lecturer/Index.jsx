@@ -118,7 +118,7 @@ const Index = ({ users, lecturers }) => {
                                 sx={{ marginTop: 2 }}
                                 onClick={handleAddLecturer} // Handle adding lecturer
                             >
-                                Add Lecturer
+                                Add As Lecturer
                             </Button>
 
                         </Box>

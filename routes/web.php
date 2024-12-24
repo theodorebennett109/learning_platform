@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AssignmentController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -26,6 +27,7 @@ Route::middleware('auth')->group(function () {
 
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\LecturerController;
+use App\Http\Controllers\MaterialController;
 
 Route::get('/courses', [CourseController::class, 'index'])->name('courses.index');
 Route::get('/courses/create', [CourseController::class, 'create'])->name('courses.create');
@@ -40,4 +42,21 @@ Route::get('/lecturers', [LecturerController::class, 'index']);  // Lecturer Ind
 Route::get('/lecturers/{id}', [LecturerController::class, 'show']);  // Lecturer Show
 Route::post('/lecturers/{id}/add', [LecturerController::class, 'addLecturer']); // Route for adding lecturer
 
+
+
+Route::prefix('courses/{courseId}/materials')->group(function () {
+    Route::post('/', [MaterialController::class, 'store']);   // Add material to course
+    Route::get('/', [MaterialController::class, 'index']);    // Get all materials for course
+    Route::delete('{materialId}', [MaterialController::class, 'destroy']);  // Delete material
+});
+
+
+
+Route::prefix('courses/{courseId}/assignments')->group(function () {
+    Route::post('/', [AssignmentController::class, 'store']);   // Add assignment to course
+    Route::get('/', [AssignmentController::class, 'index']);    // Get all assignments for course
+    Route::get('{id}', [AssignmentController::class, 'show']);    // Get single assignment
+    Route::put('{id}', [AssignmentController::class, 'update']);  // Update assignment
+    Route::delete('{id}', [AssignmentController::class, 'destroy']);  // Delete assignment
+});
 require __DIR__.'/auth.php';

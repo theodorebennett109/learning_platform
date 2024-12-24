@@ -5,17 +5,17 @@ import { Link } from '@inertiajs/react';
 import { Button } from '@mui/material';
 import React, { useState } from 'react';
 
-const Index = ({ courses }) => {
+const Index = ({ courses,lecturers }) => {
     const [modalOpen, setModalOpen] = useState(false);
 
     const handleOpen = () => setModalOpen(true);
     const handleClose = () => setModalOpen(false);
 
-    const lecturers = [
-        { id: 1, name: 'John Brown' },
-        { id: 2, name: 'Jane Smith' },
-        { id: 3, name: 'Mary Johnson' },
-    ];
+    // const lecturers = [
+    //     { id: 1, name: 'John Brown' },
+    //     { id: 2, name: 'Jane Smith' },
+    //     { id: 3, name: 'Mary Johnson' },
+    // ];
 
 
     return (

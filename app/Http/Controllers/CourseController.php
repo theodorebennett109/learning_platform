@@ -2,6 +2,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Course;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -21,9 +22,10 @@ class CourseController extends Controller
             ['id' => 5, 'title' => 'Course 5', 'description' => 'Description of Course 5', 'price' => 180],
             ['id' => 6, 'title' => 'Course 6', 'description' => 'Description of Course 6', 'price' => 250],
         ];
+        $lecturers=User::where('level','lecturer')->get();
 
         return Inertia::render('Course/Index', [
-            'courses' => $courses
+            'courses' => $courses,'lecturers' => $lecturers
         ]);
     }
 
