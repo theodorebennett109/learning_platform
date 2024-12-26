@@ -19,6 +19,7 @@ return Application::configure(basePath: dirname(__DIR__))
         // Add the VerifyCsrfToken middleware
         $middleware->validateCsrfTokens(except: [
             '/lecturers/*/add',
+            '/courses/*'
         ]);
 
         //

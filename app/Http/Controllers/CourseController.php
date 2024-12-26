@@ -46,34 +46,43 @@ class CourseController extends Controller
         $validated = $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'required|string',
+            'lecturer_id' => 'required|numeric',
             'price' => 'required|numeric',
         ]);
 
         // Create the course in the database
-        Course::create($validated);
+        $course = Course::create($validated);
 
         // Redirect back to the course index
-        return redirect()->route('courses.index');
+        return redirect()->route('courses.show', $course);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show()
+    public function show($course)
     {
-        // For now, use a static course as an example (mock data)
-        $course1 = [
-            'id' => 1,
-            'title' => 'Course 1',
-            'description' => 'Description of Course 1',
-            'price' => 100,
-        ];
 
+        // Fetch the course from the database using the provided course ID
+        $course = Course::findOrFail($course); // Ensure we are fetching the course first
+
+
+        // dd($course);
+        // Fetch the lecturer using the lecturer_id from the course
+        $courseLecturer = User::where('id', $course->lecturer_id)->first(['id', 'name']);  // Use first() to get a single lecturer
+
+        // dd($courseLecturer);
+        // Attach the lecturer information to the course object
+        $course->lecturer = $courseLecturer;
+
+        // dd($course);
         // Return the course data to the Show component
         return Inertia::render('Course/Show', [
-            'course' => $course1 // passing the mock course data to the front-end
+            'course' => $course // passing the course data with lecturer info to the front-end
         ]);
     }
+
+
 
 
     /**

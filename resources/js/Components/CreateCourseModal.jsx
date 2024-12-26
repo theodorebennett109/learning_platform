@@ -12,6 +12,10 @@ const CreateCourseModal = ({ open, onClose, lecturers }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+
+        // Log the form data to the console
+        console.log(data);
+
         post('/courses', data); // Post data to the backend to create a course
         onClose(); // Close modal after submitting
     };

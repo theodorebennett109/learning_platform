@@ -8,5 +8,5 @@ class Course extends Model
 {
     //
 
-    protected $guard = [];
+    protected $guarded = [];
 }
