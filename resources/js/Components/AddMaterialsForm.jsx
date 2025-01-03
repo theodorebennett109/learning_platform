@@ -1,47 +1,43 @@
 import React, { useState } from 'react';
 import { TextField, Button, Box, Typography } from '@mui/material';
 import { useForm } from '@inertiajs/react';
-import { useDropzone } from 'react-dropzone';  // Import useDropzone from react-dropzone
+import { useDropzone } from 'react-dropzone';
 
-const AddMaterialForm = ({ courseId }) => {
+const AddMaterialForm = ({ courseId, onCloseModal }) => {
     const { data, setData, post } = useForm({
-        title: '',   // The material's title
-        file: null,  // The file to upload (PDF, etc.)
+        title: '',
+        file: null,
     });
 
-    const [fileName, setFileName] = useState('');  // Track the name of the file selected by the user
+    const [fileName, setFileName] = useState('');
 
-    // Handle file drop
     const onDrop = (acceptedFiles) => {
-        const file = acceptedFiles[0];  // Get the first dropped file
-        setFileName(file ? file.name : '');  // Update the file name
-        setData('file', file);  // Store the file in form data
+        const file = acceptedFiles[0];
+        setFileName(file ? file.name : '');
+        setData('file', file);
     };
 
-    // Initialize react-dropzone hook
     const { getRootProps, getInputProps } = useDropzone({
-        onDrop,  // Handle dropped files
-        accept: '.pdf,.docx,.xlsx,.txt,.png,.jpg,.jpeg',  // Acceptable file types
-        multiple: false,  // Only one file at a time
+        onDrop,
+        accept: '.pdf,.docx,.xlsx,.txt,.png,.jpg,.jpeg',
+        multiple: false,
     });
 
-    // Handle form submission
     const handleSubmit = (e) => {
-        e.preventDefault();  // Prevent default form submission
-
-        // Ensure a file is selected before submitting
+        e.preventDefault();
         if (!data.file) {
-            alert("Please select a file.");
+            alert('Please select a file.');
             return;
         }
-
-        // Send the form data (including file) to the backend
-        post(`/courses/${courseId}/materials`, data);
+        post(`/courses/${courseId}/materials`, {
+            onSuccess: () => {
+                if (onCloseModal) onCloseModal();  // Close the modal after success
+            },
+        });
     };
 
     return (
         <form onSubmit={handleSubmit}>
-            {/* Title input */}
             <TextField
                 required
                 label="Material Title"
@@ -50,18 +46,22 @@ const AddMaterialForm = ({ courseId }) => {
                 sx={{ marginBottom: 2 }}
                 fullWidth
             />
-
-            {/* Drag-and-Drop file input */}
             <Box sx={{ marginBottom: 2 }}>
-                <div {...getRootProps()} style={{ border: '2px dashed #1976d3', padding: '20px', borderRadius: '5px', cursor: 'pointer' }}>
+                <div
+                    {...getRootProps()}
+                    style={{
+                        border: '2px dashed #1976d3',
+                        padding: '20px',
+                        borderRadius: '5px',
+                        cursor: 'pointer',
+                    }}
+                >
                     <input {...getInputProps()} />
-                    <Typography variant="body1" color="textSecondary" align="center">
-                        {fileName ? `Selected File: ${fileName}` : 'Drag & Drop your file here, or click to select a file'}
+                    <Typography variant="body1" align="center">
+                        {fileName || 'Drag & Drop your file here, or click to select one.'}
                     </Typography>
                 </div>
             </Box>
-
-            {/* Submit button */}
             <Button variant="contained" type="submit" fullWidth>
                 Upload Material
             </Button>

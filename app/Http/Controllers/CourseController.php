@@ -60,28 +60,47 @@ class CourseController extends Controller
     /**
      * Display the specified resource.
      */
+    // public function show($course)
+    // {
+
+    //     // Fetch the course from the database using the provided course ID
+    //     $course = Course::findOrFail($course); // Ensure we are fetching the course first
+
+
+    //     // dd($course);
+    //     // Fetch the lecturer using the lecturer_id from the course
+    //     $courseLecturer = User::where('id', $course->lecturer_id)->first(['id', 'name']);  // Use first() to get a single lecturer
+
+    //     // dd($courseLecturer);
+    //     // Attach the lecturer information to the course object
+    //     $course->lecturer = $courseLecturer;
+
+    //     // dd($course);
+    //     // Return the course data to the Show component
+    //     return Inertia::render('Course/Show', [
+    //         'course' => $course
+    //          // passing the course data with lecturer info to the front-end
+    //     ]);
+    // }
+
     public function show($course)
     {
+        // Fetch the course along with the materials and lecturer using eager loading
+        $course = Course::with('materials') // Eagerly load materials
+                        ->findOrFail($course); // Ensure we are fetching the course first
 
-        // Fetch the course from the database using the provided course ID
-        $course = Course::findOrFail($course); // Ensure we are fetching the course first
-
-
-        // dd($course);
         // Fetch the lecturer using the lecturer_id from the course
-        $courseLecturer = User::where('id', $course->lecturer_id)->first(['id', 'name']);  // Use first() to get a single lecturer
+        $courseLecturer = User::where('id', $course->lecturer_id)->first(['id', 'name']); // Get the lecturer details
 
-        // dd($courseLecturer);
         // Attach the lecturer information to the course object
         $course->lecturer = $courseLecturer;
 
-        // dd($course);
-        // Return the course data to the Show component
+        // Return the course data along with materials and lecturer info to the front-end
         return Inertia::render('Course/Show', [
-            'course' => $course // passing the course data with lecturer info to the front-end
+            'course' => $course,
+
         ]);
     }
-
 
 
 

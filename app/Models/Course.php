@@ -9,4 +9,8 @@ class Course extends Model
     //
 
     protected $guarded = [];
+    public function materials()
+    {
+        return $this->hasMany(Material::class);
+    }
 }
