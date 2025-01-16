@@ -13,15 +13,8 @@ class CourseController extends Controller
      */
     public function index()
     {
-        // For now, return dummy data as an array
-        $courses = [
-            ['id' => 1, 'title' => 'Course 1', 'description' => 'Description of Course 1', 'price' => 100],
-            ['id' => 2, 'title' => 'Course 2', 'description' => 'Description of Course 2', 'price' => 200],
-            ['id' => 3, 'title' => 'Course 3', 'description' => 'Description of Course 3', 'price' => 150],
-            ['id' => 4, 'title' => 'Course 4', 'description' => 'Description of Course 4', 'price' => 120],
-            ['id' => 5, 'title' => 'Course 5', 'description' => 'Description of Course 5', 'price' => 180],
-            ['id' => 6, 'title' => 'Course 6', 'description' => 'Description of Course 6', 'price' => 250],
-        ];
+        // Fetch all courses from the database
+        $courses=Course::all();
         $lecturers=User::where('level','lecturer')->get();
 
         return Inertia::render('Course/Index', [
