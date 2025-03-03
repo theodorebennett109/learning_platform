@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import Navbar from '@/Components/Navbar';
 import Sidebar from '@/Components/Sidebar';
 import { useMediaQuery, useTheme } from '@mui/material';
+import { Toaster } from 'react-hot-toast';
 
 const MainLayout = ({ children }) => {
   const [sidebarOpen, setSidebarOpen] = useState(false); // State to control the sidebar visibility
@@ -16,6 +17,8 @@ const MainLayout = ({ children }) => {
 
   return (
     <div style={{ display: 'flex' }}>
+        {/* Toast message */}
+        <div><Toaster/></div>
       {/* Navbar */}
       <Navbar onToggleSidebar={toggleSidebar} sidebarOpen={sidebarOpen} />
 

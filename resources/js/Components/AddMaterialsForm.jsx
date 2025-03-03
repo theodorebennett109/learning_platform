@@ -3,7 +3,7 @@ import { TextField, Button, Box, Typography } from '@mui/material';
 import { useForm } from '@inertiajs/react';
 import { useDropzone } from 'react-dropzone';
 
-const AddMaterialForm = ({ courseId, onCloseModal }) => {
+const AddMaterialForm = ({ courseId, closeModal }) => {
     const { data, setData, post } = useForm({
         title: '',
         file: null,
@@ -31,7 +31,9 @@ const AddMaterialForm = ({ courseId, onCloseModal }) => {
         }
         post(`/courses/${courseId}/materials`, {
             onSuccess: () => {
-                if (onCloseModal) onCloseModal();  // Close the modal after success
+                console.log('Material uploaded successfully');
+
+                closeModal();  // Close the modal after success
             },
         });
     };

@@ -16,12 +16,7 @@ class LecturerController extends Controller
         // Fetch all users where the level is 'lecturer'
         $users = User::all();
         // $lecturer = User::where('level', 'lecturer')->get(['id', 'name', 'email']);
-        $lecturers = [
-            ['id' => 2, 'name' => 'Jane Smith', 'email' => 'jane.smith@example.com','level'=>'lecturer'],
-            ['id' => 3, 'name' => 'Mary Johnson', 'email' => 'mary.johnson@example.com','level'=>'lecturer'],
-            ['id' => 4, 'name' => 'James Wilson', 'email' => 'james.wilson@example.com','level'=>'lecturer'],
-            ['id' => 5, 'name' => 'Patricia Taylor', 'email' => 'patricia.taylor@example.com','level'=>'lecturer'],
-        ];
+        $lecturers = User::where('level', 'lecturer')->get(['id', 'name', 'email']);
         // Use Inertia to render the Lecturer/Index page and pass the lecturers data
         return Inertia::render('Lecturer/Index', [
             'users'=>$users,

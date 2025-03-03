@@ -11,12 +11,6 @@ const Index = ({ courses,lecturers }) => {
     const handleOpen = () => setModalOpen(true);
     const handleClose = () => setModalOpen(false);
 
-    // const lecturers = [
-    //     { id: 1, name: 'John Brown' },
-    //     { id: 2, name: 'Jane Smith' },
-    //     { id: 3, name: 'Mary Johnson' },
-    // ];
-
 
     return (
         <MainLayout>

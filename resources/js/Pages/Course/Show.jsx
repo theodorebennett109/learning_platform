@@ -1,14 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import MainLayout from '@/Layouts/MainLayout';
 import { Box, Typography, Button, Modal, List, ListItem } from '@mui/material';
-import { ControlPoint } from '@mui/icons-material';
+import { ControlPoint} from '@mui/icons-material';
 import AddMaterialForm from '@/Components/AddMaterialsForm';
+import getFileIcon from '@/utils/getFileIcons';
 
 const Show = ({ course, success, error }) => {
   const [openMaterialModal, setOpenMaterialModal] = useState(false);
 
   console.log(error);
   console.log(success);
+  console.log(course);
+
 
 
   const materials = course.materials;
@@ -48,13 +51,34 @@ const Show = ({ course, success, error }) => {
 
       {/* Materials Section */}
       <Box sx={{ marginTop: 5, paddingLeft: '20px' }}>
+
+      <Button
+          variant="contained"
+          startIcon={<ControlPoint />}
+          sx={{ marginBottom: 2 }}
+          onClick={handleOpenMaterialModal}
+        >
+          Add Material
+        </Button>
+
         <Typography variant="h6">Materials:</Typography>
         <List sx={{ marginBottom: 2 }}>
           {materials.length > 0 ? (
             materials.map((material) => (
-              <ListItem key={material.id}>
+                <ListItem key={material.id} className='flex gap-2'>                <a
+                style={{marginLeft: 10}}
+                  href={`/storage/${material.url}`}
+                  download
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                      {/* Show the icon based on the file type */}
+      {getFileIcon(material.type)}
+                </a>
                 <Typography variant="body1">{material.title}</Typography>
+
               </ListItem>
+
             ))
           ) : (
             <Typography variant="body2" color="textSecondary">
@@ -63,14 +87,7 @@ const Show = ({ course, success, error }) => {
           )}
         </List>
 
-        <Button
-          variant="contained"
-          startIcon={<ControlPoint />}
-          sx={{ marginTop: 2 }}
-          onClick={handleOpenMaterialModal}
-        >
-          Add Material
-        </Button>
+
       </Box>
 
       {/* Modal for Adding Material */}
@@ -96,7 +113,7 @@ const Show = ({ course, success, error }) => {
           <Typography variant="h6" gutterBottom>
             Add Material
           </Typography>
-          <AddMaterialForm courseId={course.id} />
+          <AddMaterialForm courseId={course.id} closeModal={handleCloseMaterialModal} />
         </Box>
       </Modal>
     </MainLayout>

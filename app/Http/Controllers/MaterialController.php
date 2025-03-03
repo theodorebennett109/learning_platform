@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 use App\Models\Material;
 use App\Models\Course;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
 
 class MaterialController extends Controller
@@ -35,10 +36,11 @@ class MaterialController extends Controller
                 'url' => $filePath,
                 'type' => $fileType,
             ]);
+            Log::info('Material: ' . $material);
             $material->save();
 
             // Eager load the materials relationship
-            $course->load('materials','lecturers');
+            $course->load('materials');
 
             // Return a success message with the course data
             return Inertia::render('Course/Show', [
@@ -47,6 +49,8 @@ class MaterialController extends Controller
             ]);
         } catch (\Exception $e) {
             // Return an error message in case of failure
+            $course = Course::findOrFail($courseId);
+            Log::error('Failed to add material: ' . $e->getMessage());
             return Inertia::render('Course/Show', [
                 'course' => $course,
                 'error' => 'Failed to add material: ' . $e->getMessage(),
